@@ -1,7 +1,14 @@
 import turtle
 import math
 
-def draw_pythagoras_tree(t, branch_length, angle, level):
+def draw_pythagoras_tree(t: turtle.Turtle, branch_length: float, angle: float, level: int) -> None:
+    """
+    Рекурсивно малює дерево Піфагора.
+    :param t: Екземпляр черепашки для малювання
+    :param branch_length: Довжина поточної гілки
+    :param angle: Кут розгалуження
+    :param level: Поточний рівень рекурсії
+    """
     if level == 0:
         return
 
@@ -14,18 +21,30 @@ def draw_pythagoras_tree(t, branch_length, angle, level):
     t.backward(branch_length)
 
 def main():
-    level = int(input("Enter the recursion level: "))
+    """Головна функція програми."""
+    # Валідація введення
+    while True:
+        try:
+            level = int(input("Enter the recursion level (≥0): "))
+            if level >= 0:
+                break
+            print("Level must be ≥0!")
+        except ValueError:
+            print("Please enter a valid integer!")
+
     branch_length = 100
     angle = 45
 
     screen = turtle.Screen()
     screen.bgcolor("white")
+    screen.setup(width=800, height=800)  # Збільшений розмір екрану
 
     t = turtle.Turtle()
     t.speed(0)
+    t.hideturtle()  # Сховати курсор
     t.left(90)
     t.up()
-    t.backward(200)
+    t.backward(branch_length * (level + 1) / 2)  # Автоматичне позиціонування
     t.down()
     t.color("green")
 
